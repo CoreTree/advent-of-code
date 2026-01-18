@@ -13,7 +13,8 @@ struct Row {
 struct FileReader {
     func readFile(filename:String) -> [String] {
         do {
-            let filePath = ""
+            let filePath = "/Users/austin/Documents/code/advent-of-code/2025/AOC_Day1.playground/Resources/"
+//            let filePath = ""
             let read = try String(contentsOfFile: filePath + filename, encoding: .utf8)
             return read.split(separator: "\n").map { String($0) }
         } catch {
