@@ -4,6 +4,7 @@ on: [push]
 jobs:
   mirror-to-codeberg:
     runs-on: ubuntu-latest
+    environment: github-to-codeberg
     steps:
       - uses: actions/checkout@v5
       - run: cp ~/.ssh/config ~/.ssh/config.old
