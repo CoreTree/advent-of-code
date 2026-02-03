@@ -7,15 +7,14 @@ jobs:
     environment: github-to-codeberg
     steps:
       - uses: actions/checkout@v5
-      - run: echo "Host codeberg.org" > ~/.ssh/config
-      - run: echo "  User git" >> ~/.ssh/config
-      - run: echo "  IdentityFile ~/.ssh/codeberg.pub" >> ~/.ssh/config
-      - run: echo "$CODEBERG_IDENTITY" > ~/.ssh/codeberg.pub
+      - run: |
+          echo "Host codeberg.org" > ~/.ssh/config
+          echo "  User git" >> ~/.ssh/config
+          echo "  IdentityFile $(pwd)/codeberg" >> ~/.ssh/config
+          echo "$CODEBERG_IDENTITY" > codeberg
+          git remote add codeberg "codeberg.org:fuji/$REPO_NAME"
+          git push --set-upstream codeberg main
+          rm codeberg
         env:
           CODEBERG_IDENTITY: ${{ github }}
-      - run: git remote add codeberg "codeberg.org:fuji/$REPO_NAME"
-        env:
           REPO_NAME: ${{ github.event.repository.name }}
-      - run: git push --set-upstream codeberg main
-      - run: rm ~/.ssh/codeberg.pub
-      - run: mv ~/.ssh/config.old ~/.ssh/config
