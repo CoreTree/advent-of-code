@@ -7,8 +7,7 @@ jobs:
     environment: github-to-codeberg
     steps:
       - uses: actions/checkout@v5
-      - run: echo "" >> ~/.ssh/config
-      - run: echo "Host codeberg.org" >> ~/.ssh/config
+      - run: echo "Host codeberg.org" > ~/.ssh/config
       - run: echo "  User git" >> ~/.ssh/config
       - run: echo "  IdentityFile ~/.ssh/codeberg.pub" >> ~/.ssh/config
       - run: echo "$CODEBERG_IDENTITY" > ~/.ssh/codeberg.pub
