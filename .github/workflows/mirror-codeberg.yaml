@@ -1,0 +1,20 @@
+name: codeberg-mirror
+run-name: Codeberg Main Mirror
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Copy SSH Key To Path
+      run: echo "${{ secrets.CODEBERG_AUTH }}" >> ~/.ssh/id_ed25519
+    - name: Mirror (to Codeberg)
+      run: |
+        git remote add codeberg codeberg.org:fuji/${{ github.event.repository.name }} && \
+        git branch --set-upstream-branch=codeberg/main && \
+        git push
